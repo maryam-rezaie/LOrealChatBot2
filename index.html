@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A guided L'Oréal product-aware routine builder powered by AI."
+    />
+    <title>L'Oréal Routine Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="app-shell">
+      <aside class="brand-panel">
+        <img class="logo" src="img/loreal-logo.png" alt="L'Oréal" />
+        <p class="panel-kicker">ROUTINE LAB</p>
+        <h1>Choose. Combine. Ask.</h1>
+        <p class="panel-copy">
+          Turn real product data into a routine you can understand and adjust.
+        </p>
+
+        <ol class="steps-list">
+          <li><span>1</span><div><strong>Browse</strong><small>Search the catalog</small></div></li>
+          <li><span>2</span><div><strong>Select</strong><small>Save products locally</small></div></li>
+          <li><span>3</span><div><strong>Generate</strong><small>Build an AI routine</small></div></li>
+          <li><span>4</span><div><strong>Follow up</strong><small>Keep the conversation going</small></div></li>
+        </ol>
+
+        <div class="panel-tools">
+          <label class="web-toggle" for="webSearchToggle">
+            <input id="webSearchToggle" type="checkbox" checked />
+            <span aria-hidden="true"><i class="fa-solid fa-globe"></i></span>
+            <div><strong>Web search</strong><small>Show current sources</small></div>
+          </label>
+          <button id="rtlToggle" type="button" class="panel-button" aria-pressed="false">
+            <i class="fa-solid fa-language" aria-hidden="true"></i>
+            <span>RTL layout</span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="workspace-header">
+          <div>
+            <p class="eyebrow">PRODUCT-AWARE BEAUTY ASSISTANT</p>
+            <h2>Build your routine</h2>
+          </div>
+          <p class="secure-note">
+            <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+            API key protected by Cloudflare
+          </p>
+        </header>
+
+        <section class="catalog-card" aria-labelledby="catalogHeading">
+          <div class="card-heading">
+            <div>
+              <span class="step-number">01</span>
+              <h3 id="catalogHeading">Find products</h3>
+            </div>
+            <p id="resultsCount" aria-live="polite">Loading products…</p>
+          </div>
+
+          <div class="filters">
+            <label for="productSearch" class="search-box">
+              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+              <input
+                id="productSearch"
+                type="search"
+                placeholder="Search product names, brands, ingredients…"
+                autocomplete="off"
+              />
+            </label>
+            <label for="categoryFilter" class="select-box">
+              <i class="fa-solid fa-sliders" aria-hidden="true"></i>
+              <select id="categoryFilter">
+                <option value="">All categories</option>
+              </select>
+            </label>
+          </div>
+
+          <p class="catalog-help">Select a card. Open “Why it fits” for the full description.</p>
+          <div id="productsContainer" class="products-grid"></div>
+          <button id="showMoreBtn" class="outline-button" type="button" hidden>
+            Show more products
+          </button>
+        </section>
+
+        <div class="planner-grid">
+          <section class="selection-card" aria-labelledby="selectedHeading">
+            <div class="card-heading">
+              <div>
+                <span class="step-number">02</span>
+                <h3 id="selectedHeading">Your shelf</h3>
+              </div>
+              <span id="selectedCount" class="selected-counter">0</span>
+            </div>
+
+            <div id="selectedProductsList" class="selected-list"></div>
+            <button id="clearSelectionsBtn" class="link-button danger" type="button" disabled>
+              <i class="fa-solid fa-trash" aria-hidden="true"></i> Clear all products
+            </button>
+            <p id="routineStatus" class="routine-status" aria-live="polite">
+              Add products from the catalog.
+            </p>
+            <button id="generateRoutine" class="generate-button" type="button" disabled>
+              <span>Generate routine</span>
+              <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </button>
+          </section>
+
+          <section class="chat-card" aria-labelledby="chatHeading">
+            <div class="chat-card-header">
+              <div class="advisor-avatar" aria-hidden="true">L</div>
+              <div>
+                <h3 id="chatHeading">Routine Coach</h3>
+                <p><span></span> Ready for questions</p>
+              </div>
+              <button id="clearChatBtn" class="icon-button" type="button" aria-label="Clear conversation">
+                <i class="fa-solid fa-rotate-right" aria-hidden="true"></i>
+              </button>
+            </div>
+
+            <div
+              id="chatWindow"
+              class="chat-window"
+              role="log"
+              aria-live="polite"
+              aria-relevant="additions"
+            ></div>
+
+            <form id="chatForm" class="chat-form">
+              <label class="visually-hidden" for="userInput">Ask about the routine</label>
+              <input
+                id="userInput"
+                type="text"
+                maxlength="600"
+                placeholder="Ask a follow-up question…"
+                autocomplete="off"
+                required
+              />
+              <button id="sendBtn" type="submit" aria-label="Send message">
+                <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+              </button>
+            </form>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <p>&copy; <span id="currentYear"></span> L'Oréal. Student project.</p>
+      <p>Beauty guidance only—not medical advice.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
